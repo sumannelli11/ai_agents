@@ -1,6 +1,48 @@
 from crewai.tools import BaseTool
 from typing import Type
 from pydantic import BaseModel, Field
+from crewai.tools import BaseTool
+
+
+
+# tools/StockDataTool.py
+import yfinance as yf
+
+# tools/StockDataTool.py
+
+import yfinance as yf
+
+class StockDataTool(BaseTool):
+    name: str = "LiveStockDataTool"
+    description: str = "Provides real-time stock data for Indian companies using their NSE tickers"
+
+    def _run(self, ticker: str) -> str:
+        try:
+            stock = yf.Ticker(ticker)
+            info = stock.info
+
+            return f"""
+📊 **{info.get('longName', ticker)} ({ticker})**
+
+- **Current Price**: ₹{info.get('currentPrice')}
+- **52-Week High**: ₹{info.get('fiftyTwoWeekHigh')}
+- **52-Week Low**: ₹{info.get('fiftyTwoWeekLow')}
+- **P/E Ratio**: {info.get('trailingPE')}
+- **Volume**: {info.get('volume')}
+- **Market Cap**: ₹{info.get('marketCap')}
+- **Sector**: {info.get('sector', 'N/A')}
+
+📝 **Summary**: {info.get('longBusinessSummary', 'No summary available.')}
+"""
+        except Exception as e:
+            return f"⚠️ Error fetching data for {ticker}: {str(e)}"
+
+
+
+
+from crewai.tools import BaseTool
+from typing import Type
+from pydantic import BaseModel, Field
 
 
 class MyCustomToolInput(BaseModel):
