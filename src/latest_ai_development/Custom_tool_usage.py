@@ -5,9 +5,6 @@ import os
 
 stock_data_tool = StockDataTool()
 
-print(os.getenv('SERPER_API_KEY'))
-print("'test")
-
 # Importing crewAI tools
 from crewai_tools import (
     DirectoryReadTool,
@@ -18,8 +15,6 @@ from crewai_tools import (
 import os
 # # Set up API keys
 # os.environ["OPENAI_API_KEY"] = "dummy_key"
-os.environ["SERPER_API_KEY"] = 'fdb8fa46ff5b203b254aacc91de76d216a56028d'# serper.dev API key
-os.environ["GEMINI_API_KEY"] = 'AIzaSyBB6sbOPqSqRcyO7uEWJ-tfDv51vtjhnDo'
 
 # Instantiate tools
 docs_tool = DirectoryReadTool(directory='./blog-posts')
@@ -34,7 +29,7 @@ llm =  LLM(
     model="gemini/gemini-1.5-flash",
     temperature=0.7,
         provider="google",  # 👈 Explicitly set the provider
-    api_key='AIzaSyBB6sbOPqSqRcyO7uEWJ-tfDv51vtjhnDo'
+    api_key= os.getenv('GEMINI_API_KEY')
 )
 # Create agents
 researcher = Agent(
