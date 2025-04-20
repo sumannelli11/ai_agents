@@ -18,10 +18,9 @@ def run():
     Run the crew.
     """
     inputs = {
-        'topic': 'AI LLMs',
+        'topic': 'Can I buy a new share SALASAR.NS?',
         'current_year': str(datetime.now().year)
     }
-    
     try:
         LatestAiDevelopment().crew().kickoff(inputs=inputs)
     except Exception as e:
@@ -52,6 +51,8 @@ def replay():
         raise Exception(f"An error occurred while replaying the crew: {e}")
 
 def test():
+
+
     """
     Test the crew execution and returns the results.
     """
@@ -60,7 +61,11 @@ def test():
         "current_year": str(datetime.now().year)
     }
     try:
-        LatestAiDevelopment().crew().test(n_iterations=int(sys.argv[1]), openai_model_name=sys.argv[2], inputs=inputs)
+        run()
 
     except Exception as e:
         raise Exception(f"An error occurred while testing the crew: {e}")
+
+
+if __name__ == '__main__':
+    run()
